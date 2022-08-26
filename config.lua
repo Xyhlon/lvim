@@ -9,7 +9,7 @@ a global executable or a path to
 an executable
 ]]
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
-
+vim.opt.termguicolors = true
 lvim.auto_complete = true
 lvim.auto_close_tree = 0
 lvim.wrap_lines = false
@@ -18,7 +18,7 @@ lvim.ignore_case = true
 lvim.smart_case = true
 -- lvim.lang.lua.formatters = { { exe = "stylua" } }
 
-lvim.lsp.automatic_servers_installation = true
+lvim.lsp.installer.setup.automatic_installation = true
 -- TODO User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 --O.plugin.colorizer.active = false
@@ -68,45 +68,18 @@ vim.cmd [[
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.lint_on_save = true
-lvim.colorscheme = "onedarker"
+lvim.colorscheme = "oceanic_material"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- lvim.keys[""]
 -- local vsc_launch = require "dap.ext.vscode"
 -- vsc_launch.load_launchjs()
 
--- local dap_install = require("dap-install")
--- dap_install.config(
--- 	"cp",
---     {
---         adapters = {
---             type = "executable",
---             command = "python3.9",
---             args = {"-m", "debugpy.adapter"}
---         },
---         configurations = {
---             {
---                 type = "python",
---                 request = "launch",
---                 name = "Launch file",
---                 program = "${file}",
---                 pythonPath = function()
---                     local cwd = vim.fn.getcwd()
---                     if vim.fn.executable(cwd .. "/usr/bin/python3.9") == 1 then
---                         return cwd .. "/usr/bin/python3.9"
---                     elseif vim.fn.executable(cwd .. "/usr/bin/python3.9") == 1 then
---                         return cwd .. "/usr/bin/python3.9"
---                     else
---                         return "/usr/bin/python3.9"
---                     end
---                 end
---             }
---         }
---     }
--- )
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = ""
 -- edit a default keymapping
@@ -138,14 +111,14 @@ lvim.builtin.bufferline.active = true
 lvim.builtin.lua_dev = { active = true }
 
 -- if you don't want all the parsers change this to a table of the ones you want
-local dap_install = require "dap-install"
-local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+-- local dap_install = require "dap-install"
+-- local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
-for _, debugger in ipairs(dbg_list) do
-  dap_install.config(debugger)
-end
+-- for _, debugger in ipairs(dbg_list) do
+--   dap_install.config(debugger)
+-- end
 
-local function P(value)
+function P(value)
   print(vim.inspect(value))
   return value
 end
@@ -226,6 +199,14 @@ lvim.plugins = {
     end,
   },
   { "stevearc/vim-arduino" },
+  { "glepnir/oceanic-material" },
+  {
+    "rcarriga/nvim-dap-ui",
+    requires = { "mfussenegger/nvim-dap" },
+    config = function()
+      require("dapui").setup()
+    end,
+  },
   -- {
   -- 	"lewis6991/gitsigns.nvim",
   -- 	config = function()
@@ -235,6 +216,9 @@ lvim.plugins = {
   -- },
 }
 
+if lvim.builtin.dap.active then
+  require("user.dap").config()
+end
 -- cmd = {
 --     "arduino-language-server",
 --     "-cli-config",
@@ -246,33 +230,50 @@ lvim.plugins = {
 --     "-fqbn",
 --     "arduino:avr:uno",
 --   }
-require("nvim-lsp-installer").setup {}
-local lspconfig = require "lspconfig"
-lspconfig.arduino_language_server.setup {
-  cmd = {
-    -- Required
-    "arduino-language-server",
-    "-cli-config",
-    "~/.arduino15/arduino-cli.yaml",
-    -- Optional
-    "-cli",
-    "/usr/bin/arduino-cli",
-    "-clangd",
-    "/usr/bin/clangd",
+-- require("nvim-lsp-installer").setup {}
+-- local lspconfig = require "lspconfig"
+-- lspconfig.arduino_language_server.setup {
+--   cmd = {
+--     -- Required
+--     "arduino-language-server",
+--     "-cli-config",
+--     "~/.arduino15/arduino-cli.yaml",
+--     -- Optional
+--     "-cli",
+--     "/usr/bin/arduino-cli",
+--     "-clangd",
+--     "/usr/bin/clangd",
 
-    "-fqbn",
-    "arduino:avr:uno",
-  },
-  -- root_dir = lspconfig.util.find_git_ancestor,
-  root_dir = function(fname)
-    -- P(vim.fn.expand "%:p:h")
-    return vim.fn.expand "%:p:h"
-    -- local root_files = { vim.fn.expand "%" }
-    -- P(fname)
-    -- P(root_files)
-    -- local primary = lspconfig.util.root_pattern(unpack(root_files))(fname)
-    -- P(primary)
-    -- return primary
-  end,
-  filetypes = { "arduino", "ino" },
-}
+--     "-fqbn",
+--     "arduino:avr:uno",
+--   },
+
+--   -- root_dir = lspconfig.util.find_git_ancestor,
+--   root_dir = function(fname)
+--     -- P(vim.fn.expand "%:p:h")
+--     return vim.fn.expand "%:p:h"
+--     -- local root_files = { vim.fn.expand "%" }
+--     -- P(fname)
+--     -- P(root_files)
+--     -- local primary = lspconfig.util.root_pattern(unpack(root_files))(fname)-
+--     -- P(primary)
+--     -- return primary
+--   end,
+--   filetypes = { "arduino", "ino" },
+-- }
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/onedarker.nvim
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/opt/playground
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/vimtex
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/vim-cmake
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/vim-repeat
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/nvim-deus
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/vim-latexfmt
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/nvim-colorizer.lua
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/vim-arduino
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/oceanic-material
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/tabular
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/vim-surround
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/doom-one.nvim
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/nvim-lsp-installer
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/vim-multiple-cursors
+-- - /home/bob/.local/share/lunarvim/site/pack/packer/start/nvim-dap-virtual-text
