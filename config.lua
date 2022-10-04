@@ -76,6 +76,8 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+lvim.keys.insert_mode["jk"] = "<ESC>"
+lvim.keys.insert_mode["kj"] = "<ESC>"
 -- lvim.keys[""]
 -- local vsc_launch = require "dap.ext.vscode"
 -- vsc_launch.load_launchjs()
@@ -158,10 +160,10 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   lvim.builtin.telescope.defaults.mappings.i["<C-p>"] = actions.cycle_history_prev
 -- end
 
-vim.lsp.set_log_level "trace"
-if vim.fn.has "nvim-0.5.1" == 1 then
-  require("vim.lsp.log").set_format_func(vim.inspect)
-end
+-- vim.lsp.set_log_level "trace"
+-- if vim.fn.has "nvim-0.5.1" == 1 then
+--   require("vim.lsp.log").set_format_func(vim.inspect)
+-- end
 -- generic LSP settings
 lvim.plugins = {
   { "theniceboy/nvim-deus" },
@@ -171,7 +173,7 @@ lvim.plugins = {
   { "godlygeek/tabular" },
   { "engeljh/vim-latexfmt" },
   { "cdelledonne/vim-cmake" },
-  -- { "folke/lua-dev.nvim" },
+  { "folke/lua-dev.nvim" },
   {
     "nvim-treesitter/playground",
     event = "BufRead",

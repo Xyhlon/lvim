@@ -20,7 +20,6 @@ M.config = function()
   -- vim.fn.
   -- P(test)
   local command = string.format("%s/bin/python", venv)
-  P(command)
   dap.adapters.python = {
     type = "executable",
     command = command,
