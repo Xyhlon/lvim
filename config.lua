@@ -18,7 +18,7 @@ lvim.ignore_case = true
 lvim.smart_case = true
 -- lvim.lang.lua.formatters = { { exe = "stylua" } }
 
-lvim.lsp.installer.setup.automatic_installation = true
+lvim.lsp.installer.setup.automatic_servers_installation = true
 -- TODO User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 --O.plugin.colorizer.active = false
