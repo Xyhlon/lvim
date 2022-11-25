@@ -179,6 +179,9 @@ lvim.plugins = {
     event = "BufRead",
   },
   { "lervag/vimtex" },
+  { "kdheepak/cmp-latex-symbols" },
+  { "KeitaNakamura/tex-conceal.vim" },
+  { "SirVer/ultisnips" },
   { "NTBBloodbath/doom-one.nvim" },
   {
     "norcalli/nvim-colorizer.lua",
