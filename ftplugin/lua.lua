@@ -1,16 +1,16 @@
-local status_ok, lua_dev = pcall(require, "lua-dev")
+local status_ok, neodev = pcall(require, "neodev")
 if not status_ok then
-  vim.cmd [[ packadd lua-dev.nvim ]]
-  lua_dev = require "lua-dev"
+  vim.cmd [[ packadd neodev.nvim ]]
+  neodev = require "neodev"
 end
 
-local luadev = lua_dev.setup {
+local luadev = neodev.setup {
   library = {
     vimruntime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
     -- plugins = false, -- installed opt or start plugins in packpath
     -- you can also specify the list of plugins to make available as a workspace library
-    plugins = { "lua-dev.nvim", "plenary.nvim" },
+    plugins = { "neodev.nvim", "plenary.nvim" },
   },
   -- runtime_path = true,
   lspconfig = {
@@ -22,6 +22,10 @@ local luadev = lua_dev.setup {
         diagnostics = {
           globals = { "vim", "lvim" },
         },
+        completion = {
+          callSnippet = "Replace"
+        }
+        ,
         workspace = {
           library = {
             [require("lvim.utils").join_paths(get_runtime_dir(), "lvim", "lua")] = true,
@@ -35,5 +39,4 @@ local luadev = lua_dev.setup {
     },
   },
 }
-
 require("lvim.lsp.manager").setup("sumneko_lua", luadev)

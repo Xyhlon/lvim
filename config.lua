@@ -103,14 +103,14 @@ lvim.keys.insert_mode["kj"] = "<ESC>"
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
+-- lvim.builtin.notify.active = true
 lvim.builtin.comment.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.dap.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.bufferline.active = true
-lvim.builtin.lua_dev = { active = true }
+-- lvim.builtin.neodev.active = true
 
 -- if you don't want all the parsers change this to a table of the ones you want
 -- local dap_install = require "dap-install"
@@ -143,6 +143,7 @@ lvim.builtin.which_key.mappings.T.p = { "<cmd>TSPlaygroundToggle<cr>", "Playgrou
 lvim.builtin.which_key.mappings.s.M = { "<cmd>Telescope man_pages sections=1,2,3,3p,4,5,6,7,8,9,<cr>", "Man Pages" }
 -- lvim.builtin.which_key.mappings.k = { "<cmd>Tabularize '<,'>", "Man Pages" }
 lvim.keys.visual_mode["Q"] = ":Tabularize /& <CR>"
+lvim.keys.normal_mode["<C-t>"] = "<cmd>ToggleTerm<cr>"
 -- Treesitter
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = "all"
@@ -173,7 +174,6 @@ lvim.plugins = {
   { "godlygeek/tabular" },
   { "engeljh/vim-latexfmt" },
   { "cdelledonne/vim-cmake" },
-  { "folke/lua-dev.nvim" },
   {
     "nvim-treesitter/playground",
     event = "BufRead",
@@ -200,15 +200,18 @@ lvim.plugins = {
       require("nvim-dap-virtual-text").setup()
     end,
   },
+  -- {
+  --   "folke/neodev.nvim"
+  -- },
   { "stevearc/vim-arduino" },
   { "glepnir/oceanic-material" },
-  {
-    "rcarriga/nvim-dap-ui",
-    requires = { "mfussenegger/nvim-dap" },
-    config = function()
-      require("dapui").setup()
-    end,
-  },
+  -- {
+  --   "rcarriga/nvim-dap-ui",
+  --   requires = { "mfussenegger/nvim-dap" },
+  --   config = function()
+  --     require("dapui").setup()
+  --   end,
+  -- },
   -- {
   -- 	"lewis6991/gitsigns.nvim",
   -- 	config = function()
