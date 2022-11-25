@@ -13,30 +13,35 @@ local luadev = neodev.setup {
     plugins = { "neodev.nvim", "plenary.nvim" },
   },
   -- runtime_path = true,
-  lspconfig = {
-    on_attach = require("lvim.lsp").common_on_attach,
-    on_init = require("lvim.lsp").common_on_init,
-    capabilities = require("lvim.lsp").common_capabilities(),
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { "vim", "lvim" },
+  lspconfig = {},
+}
+
+-- then setup your lsp server as usual
+local lspconfig = require "lspconfig"
+
+lspconfig.sumneko_lua.setup {
+  on_attach = require("lvim.lsp").common_on_attach,
+  on_init = require("lvim.lsp").common_on_init,
+  capabilities = require("lvim.lsp").common_capabilities(),
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim", "lvim" },
+      },
+      completion = {
+        callSnippet = "Replace",
+      },
+      workspace = {
+        library = {
+          [require("lvim.utils").join_paths(get_runtime_dir(), "lvim", "lua")] = true,
+          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
         },
-        completion = {
-          callSnippet = "Replace"
-        }
-        ,
-        workspace = {
-          library = {
-            [require("lvim.utils").join_paths(get_runtime_dir(), "lvim", "lua")] = true,
-            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-          },
-          maxPreload = 100000,
-          preloadFileSize = 10000,
-        },
+        maxPreload = 100000,
+        preloadFileSize = 10000,
       },
     },
   },
 }
-require("lvim.lsp.manager").setup("sumneko_lua", luadev)
+
+-- require("lvim.lsp.manager").setup("sumneko_lua", luadev)
