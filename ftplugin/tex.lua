@@ -12,7 +12,7 @@ require("lvim.lsp.manager").setup("texlab", {
 -- https://github.com/cmhughes/latexindent.pl/blob/main/helper-scripts/latexindent-module-installer.pl
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-  { command = "latexindent", filetypes = { "tex" } },
+  { command = "latexindent", args = { "-m" }, filetypes = { "tex" } },
 }
 
 -- Set a linter.
