@@ -19,12 +19,15 @@ local luadev = neodev.setup {
 -- then setup your lsp server as usual
 local lspconfig = require "lspconfig"
 
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
   on_attach = require("lvim.lsp").common_on_attach,
   on_init = require("lvim.lsp").common_on_init,
   capabilities = require("lvim.lsp").common_capabilities(),
   settings = {
     Lua = {
+      runtime = {
+        version = "LuaJIT",
+      },
       diagnostics = {
         globals = { "vim", "lvim" },
       },
